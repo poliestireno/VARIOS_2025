@@ -5,12 +5,12 @@ from tkinter import messagebox
 # Ventana principal
 # -----------------------------
 root = tk.Tk()
-root.title("Truco de Magia Matemática")
+root.title("Juego de Magia Matemática")
 root.geometry("400x300")           # tamaño de ventana
 root.configure(bg="#f0f0f0")       # fondo claro
 
 # -----------------------------
-# Variables para el truco
+# Variables para el juego de magia
 # -----------------------------
 resultado = 0         # suma de valores de las tarjetas donde el alumno diga "Sí"
 indice_tarjeta = 0    # tarjeta actual que se está mostrando
@@ -33,7 +33,7 @@ canvas.place(relx=0.5, rely=0.4, anchor="center")
 def mostrar_tarjeta_canvas(numeros):
     canvas.delete("all")   # borramos contenido previo
     # Dibujamos un rectángulo simple para la tarjeta
-    canvas.create_rectangle(10, 10, 340, 140, fill="#ffffff", outline="#000000", width=2)
+    canvas.create_rectangle(10, 10, 340, 140, fill="#ffffff", outline="#000000", width=4)
     # Escribimos los números en el centro
     canvas.create_text(175, 75, text=str(numeros), font=("Helvetica", 18), fill="#000000")
 
