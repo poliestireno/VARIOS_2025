@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template_string  # Importamos Flask, JSON y renderizado de HTML
+from flask import Flask, jsonify, request, render_template,redirect,url_for  # Importamos Flask, JSON y renderizado de HTML
 
 # -----------------------------
 # Creamos la app Flask
@@ -21,70 +21,8 @@ jugador = {
 # -----------------------------
 @app.route("/", methods=["GET"])
 def index():
-    """
-    Esta función devuelve una página HTML con formularios para probar
-    todas las rutas del jugador: marcar gol, asistencia, tarjetas,
-    cambiar posición y reiniciar estadísticas.
-    """
-    
-    # Plantilla HTML usando render_template_string (para no crear archivo externo)
-    html = """
-    <!doctype html>
-    <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <title>Panel de Jugador</title>
-    </head>
-    <body>
-        <h1>Panel de Jugador: {{ jugador['nombre'] }}</h1>
-        <p>Posición actual: {{ jugador['posicion'] }}</p>
-        <p>Goles: {{ jugador['goles'] }}, Asistencias: {{ jugador['asistencias'] }}</p>
-        <p>Tarjetas amarillas: {{ jugador['tarjetas']['amarilla'] }}, rojas: {{ jugador['tarjetas']['roja'] }}</p>
-
-        <hr>
-
-        <!-- Formulario marcar goles -->
-        <form action="/gol" method="post">
-            <h3>Marcar gol</h3>
-            <label>Cantidad de goles: <input type="number" name="cantidad" value="1"></label>
-            <button type="submit">Enviar</button>
-        </form>
-
-        <!-- Formulario dar asistencia -->
-        <form action="/asistencia" method="post">
-            <h3>Dar asistencia</h3>
-            <label>Cantidad de asistencias: <input type="number" name="cantidad" value="1"></label>
-            <button type="submit">Enviar</button>
-        </form>
-
-        <!-- Formulario tarjeta amarilla -->
-        <form action="/amarilla" method="post">
-            <h3>Recibir tarjeta amarilla</h3>
-            <button type="submit">Enviar</button>
-        </form>
-
-        <!-- Formulario tarjeta roja -->
-        <form action="/roja" method="post">
-            <h3>Recibir tarjeta roja</h3>
-            <button type="submit">Enviar</button>
-        </form>
-
-        <!-- Formulario cambiar posición -->
-        <form action="/posicion" method="post">
-            <h3>Cambiar posición</h3>
-            <input type="text" name="posicion" placeholder="Nueva posición">
-            <button type="submit">Enviar</button>
-        </form>
-
-        <!-- Formulario reiniciar estadísticas -->
-        <form action="/reiniciar" method="post">
-            <h3>Reiniciar estadísticas</h3>
-            <button type="submit">Enviar</button>
-        </form>
-    </body>
-    </html>
-    """
-    return render_template_string(html, jugador=jugador)
+    # Flask busca automáticamente en la carpeta /templates/
+    return render_template("index.html", jugador=jugador)
 
 # -----------------------------
 # Rutas originales adaptadas para recibir datos de formulario
@@ -96,7 +34,7 @@ def marcar_gol():
     Recibe cantidad desde formulario o JSON.
     """
     # Intentamos leer de JSON
-    datos = request.get_json()
+    datos = request.get_json(silent=True)
     cantidad = datos.get("cantidad", 1) if datos else None
 
     # Si no hay JSON, leemos del formulario
@@ -104,8 +42,12 @@ def marcar_gol():
         cantidad = int(request.form.get("cantidad", 1))
 
     jugador["goles"] += cantidad
-    return jsonify({"mensaje": f"{jugador['nombre']} ha marcado {cantidad} gol(es)",
-                    "total_goles": jugador["goles"]})
+    
+    #si se quiere que vuelva se redirige al index
+    return redirect(url_for('index'))
+    # si se quiere que muestre los datos se descomenta lo siguiente
+    #return jsonify({"mensaje": f"{jugador['nombre']} ha marcado {cantidad} gol(es)",
+     #               "total_goles": jugador["goles"]})
 
 @app.route("/asistencia", methods=["POST"])
 def dar_asistencia():
@@ -113,7 +55,7 @@ def dar_asistencia():
     Incrementa las asistencias del jugador.
     Recibe cantidad desde formulario o JSON.
     """
-    datos = request.get_json()
+    datos = request.get_json(silent=True)
     cantidad = datos.get("cantidad", 1) if datos else None
 
     if cantidad is None:
@@ -147,7 +89,7 @@ def cambiar_posicion():
     Cambia la posición del jugador.
     Recibe datos desde formulario o JSON.
     """
-    datos = request.get_json()
+    datos = request.get_json(silent=True)
     nueva_pos = datos.get("posicion") if datos else request.form.get("posicion")
 
     if not nueva_pos:

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de Jugador</title>
+ <body>
+    <h1>Jugador: {{ jugador.nombre }}</h1>
+    <section>
+        <p><strong>Posición:</strong> {{ jugador.posicion }}</p>
+        <p><strong>Goles:</strong> {{ jugador.goles }} | <strong>Asistencias:</strong> {{ jugador.asistencias }}</p>
+        <p><strong>Tarjetas:</strong> Amarillas: {{ jugador.tarjetas.amarilla }}, Rojas: {{ jugador.tarjetas.roja }}</p>
+    </section>
+    <hr>
+    <div >
+        <form action="/gol" method="post">
+            <input type="number" name="cantidad" value="1" style="width: 50px;">
+            <button type="submit">⚽ Gol</button>
+        </form>
+
+        <form action="/asistencia" method="post">
+            <button type="submit">👟 Asistencia</button>
+        </form>
+
+        <form action="/amarilla" method="post">
+            <button type="submit" style="background: #ffd700; color: black;">🟨 Amarilla</button>
+        </form>
+
+        <form action="/roja" method="post">
+            <button type="submit" style="background: #ff4d4d;">🟥 Roja</button>
+        </form>
+    </div>
+</body>
+</html>
