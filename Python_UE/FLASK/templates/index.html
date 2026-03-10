@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOLA MUNDO</title>
+</head>
+<body>
+    <h1>HOLA MUNDO Y ADIOS</h1>
+    <h2>el animal es de la raza {{animal.raza}}</h2>
+    <h3>y la altura que tiene es {{animal.altura}}</h3>
+    <h4>y la EDAD que tiene es {{animal.edad}}</h4>
+    <form action="/incrementarEdad" method="post">
+        <input type="submit" value="INCREMENTAR EDAD">
+    </form>
+    <form action="/incrementarEdadCantidad" method="post">
+        Cantidad:<input type="number" name="mi_cantidad" value="5">
+        Multiplicador:<input type="number" name="mi_multiplicador" value="2">
+        <input type="submit" value="INCREMENTAR EDAD CANTIDAD">
+    </form>
+    <form action="/cambiarRaza" method="post">
+        Nueva Raza:<input type="text" name="nueva_raza" >
+        <input type="submit" value="CAMBIAR A ESTA RAZA">
+    </form>
+</body>
+</html>
