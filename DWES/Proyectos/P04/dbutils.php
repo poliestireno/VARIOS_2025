@@ -25,7 +25,7 @@ function realizarQuery($conexion,$texto,$argumentos = null, $isfetch=false)
     catch (PDOException $ex)
     {
         echo "Error en realizarQuery ".$ex->getMessage();
-    }   
+    }
 }
 
 ?>
