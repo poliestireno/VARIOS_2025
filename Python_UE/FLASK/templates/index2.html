@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask2</title>
+</head>
+<body>
+    <h1>PAISES</h1>
+
+    <h2>PAIS:{{paisIrlanda.nombre}}</h2>
+    <h3>CAPITAL:{{paisIrlanda.capital}}</h3>
+    <h3>MONEDA:{{paisIrlanda.moneda}}</h3>
+    <h3>POBLACION:{{paisIrlanda.poblacion}}</h3>
+    <form action="/nacerIrlanda" method="post">
+        <input type="submit" value="NACER 1 PERSONA EN IRLANDA"/>
+    </form>
+    <form action="/morirIrlanda" method="post">
+        <input type="submit" value="MORIR 1 PERSONA EN IRLANDA"/>
+    </form>
+
+    <h2>PAIS:{{paisFrancia.nombre}}</h2>
+    <h3>CAPITAL:{{paisFrancia.capital}}</h3>
+    <h3>MONEDA:{{paisFrancia.moneda}}</h3>
+    <h3>POBLACION:{{paisFrancia.poblacion}}</h3>
+    <form action="/nacerFrancia" method="post">
+        <input type="submit" value="NACER 1 PERSONA EN FRANCIA"/>
+    </form>
+    <form action="/morirFrancia" method="post">
+        <input type="submit" value="MORIR 1 PERSONA EN FRANCIA"/>
+    </form>
+</body>
+</html>
