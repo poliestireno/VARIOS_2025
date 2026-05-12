@@ -42,20 +42,46 @@ datos = [
     [5.1,80,1],
     [6.5,80,1]
 ]
+# parada temprana inteligente
+mejor_error = float("inf")
+paciencia = 2 # numero de veces que no cambie el error para parar
+contador = 0
+min_delta = 0.001
 
 learning_rate = 0.1
 epocas = 10000
+
+cont_n_interaciones = 0
+parar=False
 for _ in range(epocas):
+    if (parar):
+        break
+    error_total = 0
     for nota, asistencia,esperado in datos:
         nota_n = nota /10 # 0-1
         asistencia_n = asistencia / 100 # 0-1
         z = nota_n * peso_nota + asistencia_n * peso_asistencia + bias
         salida = sigmoideReal(z)
         error = esperado - salida
-        print(f"error: {error}")
+        #print(f"error: {error}")
+
+        error_total = error_total + abs(error)
+        print(f"error_total: {mejor_error - error_total}")
+        if mejor_error - error_total > min_delta:
+            mejor_error = error_total
+            contador = 0
+        else:
+            contador+= 1
+        if contador >= paciencia:
+            print (f"parada temprana contador_interaciones {cont_n_interaciones}")
+            parar = True
+            break
+
         peso_nota = peso_nota + error * nota_n * learning_rate
         peso_asistencia = peso_asistencia + error * asistencia_n * learning_rate
         bias = bias + error * learning_rate
+        cont_n_interaciones+= 1
+        print (cont_n_interaciones)
 
 print(f"peso_nota: {peso_nota}")
 print(f"peso_asistencia: {peso_asistencia}")
